@@ -92,8 +92,26 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    celdas_Visitadas = set()
+    pila = Stack()
+    #la pila tendra info sobre el estado actual y una lista con todos los movimientos que hace
+    comienzo = problem.getStartState()
+    pila.push((comienzo,[]))
+
+    while not pila.isEmpty():
+         estado, acciones = pila.pop()
+         if estado not in celdas_Visitadas:
+            celdas_Visitadas.add(estado)
+            if problem.isGoalState(estado):
+                return acciones
+            sucesores = problem.getSuccessors(estado)
+            indice = 0
+            while indice < len(sucesores):
+                estado_sig,accion,coste = sucesores[indice]
+                if estado_sig not in celdas_Visitadas:
+                    pila.push((estado_sig,acciones + [accion]))
+                indice+=1
+    return []
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
