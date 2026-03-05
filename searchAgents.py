@@ -145,7 +145,7 @@ class AgenteExplorador(SearchAgent):
     def __init__(self):
         self.searchFunction = search.exploration  # nuestra funcion de exploracion
         self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
-        self.celdas_visitadas = set()
+        self.celdas_visitadas = set() #como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
 
     def registerInitialState(self, state):
@@ -156,18 +156,23 @@ class AgenteExplorador(SearchAgent):
     def getAction(self, state):
         accion = SearchAgent.getAction(self, state)
         pos = state.getPacmanPosition()
-        self.celdas_visitadas.add(pos)
+        self.celdas_visitadas.add(pos) #como la accion es moverse a otra casilla, la guardamos en el atributo de celdas
+        #para saber que ya hemos pasado por ahi
         self.pasos_dados += 1
         return accion
 
     def final(self, state):
         celdas = len(self.celdas_visitadas)
-        coste_acum = len(self.actions)
-        ratio_repeticion = self.pasos_dados / celdas
+        coste_acum = len(self.actions) #coste acumulado por visitar cada celda
+        pasos = self.pasos_dados
+        ratio_repeticion = 0
+
+        if celdas != 0:
+            ratio_repeticion = pasos / celdas
 
         print("Análisis de desempeño:")
         print("-" * 20)
-        print(f"Total de pasos: {self.pasos_dados}")
+        print(f"Total de pasos: {pasos}")
         print(f"Coste acumulado: {coste_acum}")
         print(f"Número de casillas exploradas: {celdas}")
         print(f"Ratio de repetición: {ratio_repeticion}")
@@ -178,7 +183,7 @@ class AgenteExplorador_dfs(SearchAgent):
     def __init__(self):
         self.searchFunction = search.depthFirstSearch  # nuestra funcion dfs
         self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
-        self.celdas_visitadas = set()
+        self.celdas_visitadas = set()  # como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
 
     def registerInitialState(self, state):
@@ -189,18 +194,24 @@ class AgenteExplorador_dfs(SearchAgent):
     def getAction(self, state):
         accion = SearchAgent.getAction(self, state)
         pos = state.getPacmanPosition()
-        self.celdas_visitadas.add(pos)
+        self.celdas_visitadas.add(
+            pos)  # como la accion es moverse a otra casilla, la guardamos en el atributo de celdas
+        # para saber que ya hemos pasado por ahi
         self.pasos_dados += 1
         return accion
 
     def final(self, state):
         celdas = len(self.celdas_visitadas)
-        coste_acum = len(self.actions)
-        ratio_repeticion = self.pasos_dados / celdas
+        coste_acum = len(self.actions)  # coste acumulado por visitar cada celda
+        pasos = self.pasos_dados
+        ratio_repeticion = 0
+
+        if celdas != 0:
+            ratio_repeticion = pasos / celdas
 
         print("Análisis de desempeño:")
         print("-" * 20)
-        print(f"Total de pasos: {self.pasos_dados}")
+        print(f"Total de pasos: {pasos}")
         print(f"Coste acumulado: {coste_acum}")
         print(f"Número de casillas exploradas: {celdas}")
         print(f"Ratio de repetición: {ratio_repeticion}")
@@ -209,9 +220,9 @@ class AgenteExplorador_dfs(SearchAgent):
 
 class AgenteExplorador_bae(SearchAgent):
     def __init__(self):
-        self.searchFunction = search.dfs  # falta implementar la funcion bae en search.py
+        self.searchFunction = search.bae  # falta implementar la funcion bae en search.py
         self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
-        self.celdas_visitadas = set()
+        self.celdas_visitadas = set()  # como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
 
     def registerInitialState(self, state):
@@ -222,18 +233,24 @@ class AgenteExplorador_bae(SearchAgent):
     def getAction(self, state):
         accion = SearchAgent.getAction(self, state)
         pos = state.getPacmanPosition()
-        self.celdas_visitadas.add(pos)
+        self.celdas_visitadas.add(
+            pos)  # como la accion es moverse a otra casilla, la guardamos en el atributo de celdas
+        # para saber que ya hemos pasado por ahi
         self.pasos_dados += 1
         return accion
 
     def final(self, state):
         celdas = len(self.celdas_visitadas)
-        coste_acum = len(self.actions)
-        ratio_repeticion = self.pasos_dados / celdas
+        coste_acum = len(self.actions)  # coste acumulado por visitar cada celda
+        pasos = self.pasos_dados
+        ratio_repeticion = 0
+
+        if celdas != 0:
+            ratio_repeticion = pasos / celdas
 
         print("Análisis de desempeño:")
         print("-" * 20)
-        print(f"Total de pasos: {self.pasos_dados}")
+        print(f"Total de pasos: {pasos}")
         print(f"Coste acumulado: {coste_acum}")
         print(f"Número de casillas exploradas: {celdas}")
         print(f"Ratio de repetición: {ratio_repeticion}")
