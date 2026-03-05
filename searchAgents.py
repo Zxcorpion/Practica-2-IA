@@ -160,14 +160,15 @@ class AgenteExplorador(SearchAgent):
         self.pasos_dados += 1
         return accion
 
-    def estadisticas(self, state):
+    def final(self, state):
         celdas = len(self.celdas_visitadas)
-
+        coste_acum = len(self.actions)
         ratio_repeticion = self.pasos_dados / celdas
 
         print("Análisis de desempeño:")
         print("-"*20)
         print(f"Total de pasos: {self.pasos_dados}")
+        print(f"Coste acumulado: {self.pasos_dados}")
         print(f"Número de casillas exploradas: {celdas}")
         print(f"Ratio de repetición: {ratio_repeticion}")
         print("-" * 20)
@@ -192,14 +193,15 @@ class AgenteExplorador_dfs(SearchAgent):
         self.pasos_dados += 1
         return accion
 
-    def estadisticas(self, state):
+    def final(self, state):
         celdas = len(self.celdas_visitadas)
-
+        coste_acum = len(self.actions)
         ratio_repeticion = self.pasos_dados / celdas
 
         print("Análisis de desempeño:")
-        print("-"*20)
+        print("-" * 20)
         print(f"Total de pasos: {self.pasos_dados}")
+        print(f"Coste acumulado: {self.pasos_dados}")
         print(f"Número de casillas exploradas: {celdas}")
         print(f"Ratio de repetición: {ratio_repeticion}")
         print("-" * 20)
@@ -224,14 +226,15 @@ class AgenteExplorador_bae(SearchAgent):
         self.pasos_dados += 1
         return accion
 
-    def estadisticas(self, state):
+    def final(self, state):
         celdas = len(self.celdas_visitadas)
-
+        coste_acum = len(self.actions)
         ratio_repeticion = self.pasos_dados / celdas
 
         print("Análisis de desempeño:")
-        print("-"*20)
+        print("-" * 20)
         print(f"Total de pasos: {self.pasos_dados}")
+        print(f"Coste acumulado: {self.pasos_dados}")
         print(f"Número de casillas exploradas: {celdas}")
         print(f"Ratio de repetición: {ratio_repeticion}")
         print("-" * 20)
