@@ -130,10 +130,52 @@ def nullHeuristic(state, problem=None) -> float:
     """
     return 0
 
-def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directions]:
+
+def distanciaEuclidea(state, problem=None):
+    x1, y1 = state
+    x2, y2 = problem.goal
+
+    distancia = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+    return distancia
+
+
+
+def aStarSearch(problem: SearchProblem, heuristic=distanciaEuclidea) -> List[Directions]:
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    celdas_Visitadas = set()
+
+    cola = PriorityQueue()
+
+    comienzo = problem.getStartState()
+
+    prioridad_inicial = 0 + heuristic(comienzo, problem)
+
+    cola.push((comienzo, [], 0), prioridad_inicial)
+
+    while not cola.isEmpty():
+        estado, acciones, coste_acumulado = cola.pop()
+
+        if estado not in celdas_Visitadas:
+            celdas_Visitadas.add(estado)
+
+            if problem.isGoalState(estado):
+                return acciones
+
+            sucesores = problem.getSuccessors(estado)
+
+            for estado_sig, accion, coste_paso in sucesores:
+                if estado_sig not in celdas_Visitadas:
+
+                    nuevo_coste = coste_acumulado + coste_paso
+
+                    valor_heuristica = heuristic(estado_sig, problem)
+                    f_n = nuevo_coste + valor_heuristica
+
+                    cola.push((estado_sig, acciones + [accion], nuevo_coste), f_n)
+
+    return []
+
+
 
 def exploration(problem):
     # utilizamos la funcion de ufs
