@@ -220,7 +220,7 @@ class AgenteExplorador_dfs(SearchAgent):
 
 class AgenteExplorador_bae(SearchAgent):
     def __init__(self):
-        self.searchFunction = search.bae  # falta implementar la funcion bae en search.py
+        self.searchFunction = search.aStarSearch #nuestra funcion aStar
         self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
         self.celdas_visitadas = set()  # como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
