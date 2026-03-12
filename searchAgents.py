@@ -142,10 +142,32 @@ class SearchAgent(Agent):
 
 
 class AgenteExplorador(SearchAgent):
-    def __init__(self):
-        self.searchFunction = search.exploration  # nuestra funcion de exploracion
-        self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
-        self.celdas_visitadas = set() #como queremos evitar las celdas repetidas, utilizamos un set
+    def __init__(self, fn='exploration', prob='PositionSearchProblem', heuristic='nullHeuristic'):
+        # Resolvemos la funcion de busqueda por nombre
+        if fn not in dir(search):
+            raise AttributeError(fn + ' is not a search function in search.py.')
+        func = getattr(search, fn)
+        if 'heuristic' not in func.__code__.co_varnames:
+            print('[AgenteExplorador] using function ' + fn)
+            self.searchFunction = func
+        else:
+            if heuristic in globals().keys():
+                heur = globals()[heuristic]
+            elif heuristic in dir(search):
+                heur = getattr(search, heuristic)
+            else:
+                raise AttributeError(heuristic + ' is not a function in searchAgents.py or search.py.')
+            print('[AgenteExplorador]using function %s and heuristic %s' % (fn, heuristic))
+            # Note: this bit of Python trickery combines the search algorithm and the heuristic
+            self.searchFunction = lambda x: func(x, heuristic=heur)
+
+        # Get the search problem type from the name
+        if prob not in globals().keys() or not prob.endswith('Problem'):
+            raise AttributeError(prob + ' is not a search problem type in SearchAgents.py.')
+        self.searchType = globals()[prob]
+        print('[AgenteExplorador] using problem type ' + prob)
+
+        self.celdas_visitadas = set()  # como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
 
     def registerInitialState(self, state):
@@ -180,9 +202,31 @@ class AgenteExplorador(SearchAgent):
 
 
 class AgenteExplorador_dfs(SearchAgent):
-    def __init__(self):
-        self.searchFunction = search.depthFirstSearch  # nuestra funcion dfs
-        self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
+    def __init__(self, fn='dfs', prob='PositionSearchProblem', heuristic='nullHeuristic'):
+        # Resolvemos la funcion de busqueda por nombre
+        if fn not in dir(search):
+            raise AttributeError(fn + ' is not a search function in search.py.')
+        func = getattr(search, fn)
+        if 'heuristic' not in func.__code__.co_varnames:
+            print('[AgenteExplorador_dfs] using function ' + fn)
+            self.searchFunction = func
+        else:
+            if heuristic in globals().keys():
+                heur = globals()[heuristic]
+            elif heuristic in dir(search):
+                heur = getattr(search, heuristic)
+            else:
+                raise AttributeError(heuristic + ' is not a function in searchAgents.py or search.py.')
+            print('[AgenteExplorador_dfs]using function %s and heuristic %s' % (fn, heuristic))
+            # Note: this bit of Python trickery combines the search algorithm and the heuristic
+            self.searchFunction = lambda x: func(x, heuristic=heur)
+
+        # Get the search problem type from the name
+        if prob not in globals().keys() or not prob.endswith('Problem'):
+            raise AttributeError(prob + ' is not a search problem type in SearchAgents.py.')
+        self.searchType = globals()[prob]
+        print('[AgenteExplorador_dfs] using problem type ' + prob)
+
         self.celdas_visitadas = set()  # como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
 
@@ -219,9 +263,32 @@ class AgenteExplorador_dfs(SearchAgent):
 
 
 class AgenteExplorador_bae(SearchAgent):
-    def __init__(self):
-        self.searchFunction = search.aStarSearch #nuestra funcion aStar
-        self.searchType = PositionSearchProblem  # el problema será obtener la bola que mas cerca esta
+    def __init__(self, fn= 'aStarSearch',prob = 'PositionSearchProblem',
+                 heuristic = 'euclideanHeuristic'):
+        # Resolvemos la funcion de busqueda por nombre
+        if fn not in dir(search):
+            raise AttributeError(fn + ' is not a search function in search.py.')
+        func = getattr(search, fn)
+        if 'heuristic' not in func.__code__.co_varnames:
+            print('[AgenteExplorador_bae] using function ' + fn)
+            self.searchFunction = func
+        else:
+            if heuristic in globals().keys():
+                heur = globals()[heuristic]
+            elif heuristic in dir(search):
+                heur = getattr(search, heuristic)
+            else:
+                raise AttributeError(heuristic + ' is not a function in searchAgents.py or search.py.')
+            print('[AgenteExplorador_bae]using function %s and heuristic %s' % (fn, heuristic))
+            # Note: this bit of Python trickery combines the search algorithm and the heuristic
+            self.searchFunction = lambda x: func(x, heuristic=heur)
+
+        # Get the search problem type from the name
+        if prob not in globals().keys() or not prob.endswith('Problem'):
+            raise AttributeError(prob + ' is not a search problem type in SearchAgents.py.')
+        self.searchType = globals()[prob]
+        print('[AgenteExplorador_bae] using problem type ' + prob)
+
         self.celdas_visitadas = set()  # como queremos evitar las celdas repetidas, utilizamos un set
         self.pasos_dados = 0
 
