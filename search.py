@@ -131,16 +131,14 @@ def nullHeuristic(state, problem=None) -> float:
     return 0
 
 
-def distanciaEuclidea(state, problem=None):
-    x1, y1 = state
-    x2, y2 = problem.goal
-
-    distancia = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
-    return distancia
-
+def euclideanHeuristic(position, problem, info={}):
+    "The Euclidean distance heuristic for a PositionSearchProblem"
+    xy1 = position
+    xy2 = problem.goal
+    return ((xy1[0] - xy2[0]) ** 2 + (xy1[1] - xy2[1]) ** 2) ** 0.5
 
 
-def aStarSearch(problem: SearchProblem, heuristic=distanciaEuclidea) -> List[Directions]:
+def aStarSearch(problem: SearchProblem, heuristic=euclideanHeuristic) -> List[Directions]:
     """Search the node that has the lowest combined cost and heuristic first."""
     celdas_Visitadas = set()
 
